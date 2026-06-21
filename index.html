@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ZZ Absensi</title>
+    <style>
+        body { font-family: sans-serif; background: #1a3a5f; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 25px; border-radius: 20px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        input { width: 90%; padding: 15px; margin: 20px 0; border: 2px solid #e1e1e1; border-radius: 10px; text-align: center; font-size: 20px; }
+        button { width: 100%; padding: 15px; background: #2f74c0; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>ZZ ABSENSI DIGITAL</h3>
+        <p>Masukkan PIN Akses:</p>
+        <input type="password" id="pin" maxlength="4" placeholder="....">
+        <button onclick="login()">MASUK APLIKASI</button>
+    </div>
+    <script>
+        function login() {
+            if(document.getElementById('pin').value === "1234") {
+                window.location.href = "absen.html";
+            } else { alert("PIN Salah!"); }
+        }
+    </script>
+</body>
+</html>
