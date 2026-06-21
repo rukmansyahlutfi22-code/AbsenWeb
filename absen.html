@@ -3,33 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen - ZZ Absensi</title>
+    <title>ZZ ABSENSI DIGITAL</title>
     <style>
-        body { font-family: sans-serif; background: #f4f7f9; padding: 10px; }
-        .card { background: white; padding: 15px; border-radius: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        video { width: 100%; border-radius: 10px; background: #000; }
-        .btn-absen { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 10px; font-weight: bold; }
+        body { font-family: sans-serif; background: #eef2f5; margin: 0; padding: 10px; }
+        .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h3 { color: #1a3a5f; margin-top: 0; }
+        #kamera { width: 100%; border-radius: 10px; background: #000; }
+        .btn { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 10px; font-weight: bold; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th { background: #f8f9fa; padding: 10px; border-bottom: 2px solid #ddd; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <h4>Profil Perangkat Desa</h4>
-        <p>Nama: Rukmansyah (Sekdes)</p>
+        <h3>Profil Perangkat</h3>
+        <p>Nama: <b>Rukmansyah (Sekdes)</b></p>
     </div>
+
     <div class="card">
         <video id="kamera" autoplay playsinline></video>
-        <p id="infoLokasi">Mencari lokasi...</p>
-        <button class="btn-absen" onclick="kirim()">KONFIRMASI ABSENSI</button>
+        <p id="info">Lokasi: Mencari...</p>
+        <button class="btn" onclick="kirim()">KONFIRMASI ABSENSI</button>
     </div>
-    <a href="riwayat.html">Lihat Riwayat</a>
+
+    <div class="card">
+        <h3>Riwayat Absensi</h3>
+        <table>
+            <thead><tr><th>Waktu</th><th>Status</th></tr></thead>
+            <tbody id="bodyRiwayat"></tbody>
+        </table>
+    </div>
 
     <script>
-        async function start() { const stream = await navigator.mediaDevices.getUserMedia({ video: true }); document.getElementById('kamera').srcObject = stream; }
-        navigator.geolocation.getCurrentPosition(p => document.getElementById('infoLokasi').innerText = "Lokasi: " + p.coords.latitude + ", " + p.coords.longitude);
+        // Kamera
+        async function start() { const s = await navigator.mediaDevices.getUserMedia({video:true}); document.getElementById('kamera').srcObject = s; }
+        // GPS
+        navigator.geolocation.getCurrentPosition(p => document.getElementById('info').innerText = "Lokasi: " + p.coords.latitude + ", " + p.coords.longitude);
+        
+        // Kirim Data
         function kirim() {
-            // Masukkan link Google Apps Script Bapak di sini
             const url = "https://script.google.com/macros/s/AKfycbz2FWD0e8NpDJ2A67z9qrShJd3GNO4UmoWelFuHRwKk7In5sy8LgRLs7HA8f64LDupH0A/exec";
-            alert("Absensi dikirim ke server!");
+            fetch(url, { method: "POST", mode: "no-cors", body: JSON.stringify({nama: "Rukmansyah", lokasi: document.getElementById('info').innerText}) })
+            .then(() => {
+                alert("Absen Berhasil!");
+                let row = document.getElementById("bodyRiwayat").insertRow(0);
+                row.insertCell(0).innerText = new Date().toLocaleTimeString();
+                row.insertCell(1).innerText = "HADIR";
+            });
         }
         start();
     </script>
