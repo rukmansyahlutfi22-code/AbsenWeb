@@ -14,7 +14,33 @@
         .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: white; border-top: 1px solid #ddd; }
         .nav button { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; }
     </style>
+    <style>
+    :root { --primary: #2563eb; --bg: #f8fafc; }
+    body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; }
+    
+    /* Modern Card */
+    .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    
+    /* Tombol Modern */
+    .btn { 
+        width: 100%; padding: 16px; background: linear-gradient(135deg, #2563eb, #1d4ed8); 
+        color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    
+    /* Tabel Modern */
+    table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+    tr { background: white; border-radius: 10px; }
+    td { padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; }
+    
+    /* Layout */
+    .header { margin-bottom: 20px; }
+    .badge { background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+</style>
 </head>
+       <meta name="apple-mobile-web-app-capable" content="yes">
+       <meta name="mobile-web-app-capable" content="yes">
 <body>
 
     <div id="home" class="screen active">
@@ -24,7 +50,14 @@
             <p id="info">Mencari lokasi...</p>
             <button class="btn" onclick="kirim()">KONFIRMASI ABSENSI</button>
         </div>
-    </div>
+    </div> <div class="card header">
+    <h3>Pilih Nama Perangkat</h3>
+    <select id="namaPerangkat" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+        <option>Rukmansyah - Sekdes</option>
+        <option>Budi Santoso - Kaur Keuangan</option>
+        <option>Siti Aminah - Kaur Umum</option>
+        </select>
+</div>
 
     <div id="riwayat" class="screen">
         <h3>Riwayat Absensi</h3>
