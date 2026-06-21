@@ -3,80 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZZ ABSENSI DIGITAL</title>
+    <title>Absen Digital</title>
     <style>
-        body { font-family: sans-serif; background: #eef2f5; margin: 0; padding-bottom: 60px; }
-        .screen { display: none; padding: 15px; }
-        .active { display: block; }
-        .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        video { width: 100%; border-radius: 10px; background: #000; }
-        .btn { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 10px; font-weight: bold; }
-        .nav { position: fixed; bottom: 0; width: 100%; display: flex; background: white; border-top: 1px solid #ddd; }
-        .nav button { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; padding: 20px; }
+        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-top: 10px; font-size: 16px; }
+        video { width: 100%; border-radius: 15px; background: #000; }
+        .btn-modern { width: 100%; padding: 16px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 15px; }
     </style>
-    <style>
-    :root { --primary: #2563eb; --bg: #f8fafc; }
-    body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; }
-    
-    /* Modern Card */
-    .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
-    
-    /* Tombol Modern */
-    .btn { 
-        width: 100%; padding: 16px; background: linear-gradient(135deg, #2563eb, #1d4ed8); 
-        color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn:active { transform: scale(0.98); }
-    
-    /* Tabel Modern */
-    table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
-    tr { background: white; border-radius: 10px; }
-    td { padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; }
-    
-    /* Layout */
-    .header { margin-bottom: 20px; }
-    .badge { background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-</style>
 </head>
-       <meta name="apple-mobile-web-app-capable" content="yes">
-       <meta name="mobile-web-app-capable" content="yes">
 <body>
 
-    <div id="home" class="screen active">
-        <div class="card"><h3>Profil: Rukmansyah</h3></div>
-        <div class="card">
-            <video id="kamera" autoplay playsinline></video>
-            <p id="info">Mencari lokasi...</p>
-            <button class="btn" onclick="kirim()">KONFIRMASI ABSENSI</button>
-        </div>
-    </div> <div class="card header">
-    <h3>Pilih Nama Perangkat</h3>
-    <select id="namaPerangkat" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
-        <option>Rukmansyah - Sekdes</option>
-        <option>Budi Santoso - Kaur Keuangan</option>
-        <option>Siti Aminah - Kaur Umum</option>
+    <div class="card">
+        <h3>Pilih Nama Anda</h3>
+        <select id="namaPerangkat">
+            <option>Rukmansyah - Sekdes</option>
+            <option>Nama Perangkat 2</option>
+            <option>Nama Perangkat 3</option>
         </select>
-</div>
-
-    <div id="riwayat" class="screen">
-        <h3>Riwayat Absensi</h3>
-        <div class="card" id="listRiwayat">Data Riwayat...</div>
     </div>
 
-    <div class="nav">
-        <button onclick="show('home')">Home</button>
-        <button onclick="show('riwayat')">Riwayat</button>
+    <div class="card">
+        <video id="kamera" autoplay playsinline></video>
+        <p id="info">Lokasi: Mencari GPS...</p>
+        <button class="btn-modern" onclick="kirim()">KONFIRMASI ABSENSI</button>
     </div>
 
     <script>
-        function show(id) {
-            document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-        }
         async function start() { const s = await navigator.mediaDevices.getUserMedia({video:true}); document.getElementById('kamera').srcObject = s; }
         navigator.geolocation.getCurrentPosition(p => document.getElementById('info').innerText = "Lokasi: " + p.coords.latitude + ", " + p.coords.longitude);
-        function kirim() { alert("Data dikirim ke Google Sheets!"); }
+
+        function kirim() {
+            // GANTI URL DI BAWAH INI DENGAN LINK WEB APP BAPAK
+            const url = "ISI_URL_WEB_APP_BAPAK_DI_SINI"; 
+            
+            const data = { 
+                nama: document.getElementById('namaPerangkat').value, 
+                lokasi: document.getElementById('info').innerText 
+            };
+
+            fetch(url, { method: "POST", mode: "no-cors", body: JSON.stringify(data) })
+            .then(() => alert("Absensi Berhasil!"));
+        }
         start();
     </script>
 </body>
